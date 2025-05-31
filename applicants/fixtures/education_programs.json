@@ -1,0 +1,30 @@
+[
+    {
+        "model": "applicants.educationprogram",
+        "pk": 1,
+        "fields": {
+            "name": "Компьютерные науки",
+            "code": "09.03.01",
+            "level": "bachelor",
+            "description": "Программа подготовки IT-специалистов с углубленным изучением программирования, алгоритмов и искусственного интеллекта.",
+            "duration": 4,
+            "budget_places": 25,
+            "paid_places": 15,
+            "tuition_fee": "175000.00"
+        }
+    },
+    {
+        "model": "applicants.educationprogram",
+        "pk": 2,
+        "fields": {
+            "name": "Экономика",
+            "code": "38.03.01",
+            "level": "bachelor",
+            "description": "Фундаментальная подготовка экономистов для работы в финансовых организациях и государственных структурах.",
+            "duration": 4,
+            "budget_places": 30,
+            "paid_places": 20,
+            "tuition_fee": "145000.00"
+        }
+    }
+]

@@ -1,0 +1,78 @@
+{% extends 'applicants/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Профиль абитуриента: {{ applicant.full_name }}</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Основная информация</h4>
+                <p><strong>Дата рождения:</strong> {{ applicant.birth_date|date:"d.m.Y" }}</p>
+                <p><strong>Пол:</strong> {{ applicant.get_gender_display }}</p>
+                <p><strong>Дата регистрации:</strong> {{ applicant.created_at|date:"d.m.Y H:i" }}</p>
+            </div>
+            <div class="col-md-6">
+                <h4>Контактные данные</h4>
+                <p><strong>Телефон:</strong> {{ applicant.phone }}</p>
+                <p><strong>Email:</strong> {{ applicant.email }}</p>
+                <p><strong>Адрес:</strong> {{ applicant.address }}</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <h4 class="mt-4">Поданые заявления</h4>
+        {% if applications %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Программа</th>
+                        <th>Код</th>
+                        <th>Статус</th>
+                        <th>Дата подачи</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for application in applications %}
+                    <tr>
+                        <td>{{ application.program.name }}</td>
+                        <td>{{ application.program.code }}</td>
+                        <td>
+                            <span class="badge 
+                                {% if application.status == 'approved' %}bg-success
+                                {% elif application.status == 'rejected' %}bg-danger
+                                {% else %}bg-secondary{% endif %}">
+                                {{ application.get_status_display }}
+                            </span>
+                        </td>
+                        <td>{{ application.application_date|date:"d.m.Y H:i" }}</td>
+                        <td>
+                            <a href="{% url 'applicants:generate_pdf_document' applicant.id application.id %}" 
+                               class="btn btn-sm btn-primary" target="_blank">
+                                <i class="fas fa-file-pdf"></i> Справка
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">Нет поданых заявлений</div>
+        {% endif %}
+        
+        <div class="mt-4">
+            <a href="{% url 'applicants:applicant_list' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Назад к списку
+            </a>
+            <a href="{% url 'applicants:applicant_update' applicant.id %}" class="btn btn-primary">
+                <i class="fas fa-edit"></i> Редактировать
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

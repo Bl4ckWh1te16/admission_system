@@ -1,0 +1,57 @@
+{% extends 'applicants/base.html' %}
+
+{% block title %}{% if update %}Редактирование{% else %}Добавление{% endif %} абитуриента{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="mb-0">{% if update %}Редактирование{% else %}Добавление{% endif %} абитуриента</h2>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.full_name.label }}</label>
+                        {{ form.full_name }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.birth_date.label }}</label>
+                        {{ form.birth_date }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.gender.label }}</label>
+                        {{ form.gender }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.phone.label }}</label>
+                        {{ form.phone }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.email.label }}</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.address.label }}</label>
+                        {{ form.address }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">
+                    {% if update %}Сохранить изменения{% else %}Добавить абитуриента{% endif %}
+                </button>
+                <a href="{% if update %}{% url 'applicants:applicant_detail' object.id %}{% else %}{% url 'applicants:applicant_list' %}{% endif %}" 
+                   class="btn btn-secondary">
+                    Отмена
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
